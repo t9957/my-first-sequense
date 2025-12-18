@@ -28,7 +28,17 @@ _want_to_write() {
   fi
 }
 
+_action_request_output(){
+  local msg
+  echo "==== please take action ========================"
+  for msg in "$@";do
+    echo "==> ${msg}"
+  done
+  echo "==== end ======================================="
+}
+
 main(){
+  echo "starting first_sequence."
   local str
   if _is_installed "git"; then
     echo "unnecessary pac: git"
@@ -41,8 +51,11 @@ main(){
     fi
   fi
   [ ! -f ~/.ssh/github_sh_generate ] &&  ssh-keygen -t "ed25519" -N "" -f ~/.ssh/github_sh_generate -q
-  str="Host github github.com\n  HostName github.com\n  User git\n  IdentityFile ~/.ssh/github.com"
-  _want_to_write "$str" "~/.ssh/config"
+  str="Host github github.com\n  HostName github.com\n  User git\n  IdentityFile ~/.ssh/github_sh_generate"
+  [ ! -f ~/.ssh/config ] && touch ~/.ssh/config
+  _want_to_write "$str" ~/.ssh/config
+  _action_request_output "To github" "$(cat ~/.ssh/github_sh_generate.pub)"
+  echo "ending first_sequence."
 }
 
 main "$@"
