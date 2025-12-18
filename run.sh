@@ -43,7 +43,8 @@ main(){
   if _is_installed "git"; then
     echo "unnecessary pac: git"
   else
-    sudo apt-get update
+    echo "reservation pac: git"
+    sudo apt-get update | tee -a "./apt-install.log" > /dev/null 2>&1
     if sudo apt-get -y install git | tee -a "./apt-install.log" > /dev/null 2>&1; then
       echo "success install pac: git"
     else
