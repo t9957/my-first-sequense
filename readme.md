@@ -10,4 +10,4 @@ Personal use. Automatic generation of starting points.
 
 ### Confirmed platform
 
-* Ubuntu24-Server minimun install
+* Ubuntu24-Server Minimized
